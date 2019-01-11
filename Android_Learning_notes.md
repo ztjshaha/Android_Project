@@ -1,5 +1,3 @@
-# Android_Project
-
 一、Android驱动
 
 1.第一个Android App
