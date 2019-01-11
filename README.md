@@ -54,5 +54,7 @@ find -name "libc.so"
 
 不足：对于JNI的使用和理解。
 
+test
+
 
 
