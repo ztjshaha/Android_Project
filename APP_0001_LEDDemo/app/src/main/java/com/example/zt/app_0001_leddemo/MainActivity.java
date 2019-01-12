@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import com.example.zt.hardlibrary.*;
 
 public class MainActivity extends AppCompatActivity {
     private Button button = null;
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     {
         @Override
         public void onClick(View v) {
+
+            HardControl hardControl = new HardControl();
+
             ledon=!ledon;
             if(ledon) {
                 button.setText("ALL ON");
