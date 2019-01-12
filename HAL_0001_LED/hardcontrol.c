@@ -46,7 +46,7 @@ JNI_OnLoad(JavaVM *jvm, void *reserved)
 	if ((*jvm)->GetEnv(jvm, (void **)&env, JNI_VERSION_1_4)) {
 		return JNI_ERR; /* JNI version not supported */
 	}
-	cls = (*env)->FindClass(env, "com/example/hardlibrary/HardControl");
+	cls = (*env)->FindClass(env, "com/example/zt/hardlibrary/HardControl");
 	if (cls == NULL) {
 		return JNI_ERR;
 	}
