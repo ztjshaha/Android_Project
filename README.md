@@ -36,11 +36,13 @@ git checkout v1 //系统生成并添加button、checkbox
 
 二、Android app里访问C库：JNI
 
+1.通过交叉编译器，将C文件转换为静态链接库文件（*.so），并且通过安卓源码的静态库，添加C文件所需要包含的库。
+
 command:
 
-1.通过交叉编译器，将C文件转换为静态链接库文件（*.so），并且通过安卓源码的静态库，添加C文件所需要包含的库，命令如下：
-
 arm-linux-gcc -fPIC -shared hardcontrol.c -o libhardcontrol.so -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/ -nostdlib /work/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/lib/libc.so
+
+
 
 2.在源码进行静态库查找的方法：
 
@@ -54,7 +56,29 @@ find -name "libc.so"
 
 不足：对于JNI的使用和理解。
 
-test
+
+
+3.JNI接口通过open，close，ctrl打印安卓输出信息
+
+1.通过HAL_0001_LED
+
+hardcontrol.c文件添加安卓头文件log.h
+
+备注：
+
+#include <android/log.h>
+
+__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native add ..") ;
+
+在Linux操作系统下进行编译:
+
+last command:
+
+arm-linux-gcc -fPIC -shared hardcontrol.c -o libhardcontrol.so -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/ -nostdlib /work/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/lib/libc.so -I /work/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/include /work/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/lib/liblog.so
+
+tip:如果liblog.so库不包含会出现报错现象。
+
+
 
 
 
