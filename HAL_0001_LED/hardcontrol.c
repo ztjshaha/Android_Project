@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <android/log.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <sys/ioctl.h>
+
+
  
 #if 0
 typedef struct {
@@ -13,21 +20,31 @@ typedef struct {
 } JNINativeMethod;
 #endif
 
+static jint fd;
+
 jint ledOpen(JNIEnv *env, jobject cls)
 {
-	__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native ledOpen ..") ;
+	fd	=	open("/dev/leds",O_RDWR);
+	if(fd>=0)
+		return 0;
+	else 
+		return 1;
+	__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native ledOpen	:	%d",fd) ;
+
 	return 0;
 }
 
 void ledClose(JNIEnv *env, jobject cls)
 {
 	__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native ledClose ..") ;
+	close(fd);
 }
 
 
 jint ledCtrl(JNIEnv *env, jobject cls, jint which, jint status)
 {
-	__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native ledCtrl : %d , %d",which,status) ;
+	int ret	=	ioctl(fd,status,which);
+	__android_log_print(ANDROID_LOG_DEBUG,"LEDDemo","native ledCtrl : %d , %d ,%d",which,status,ret) ;
 	return 0;
 }
 
